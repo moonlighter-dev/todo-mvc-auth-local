@@ -1,0 +1,15 @@
+
+    <h1>Appointments</h1>
+    <ul>
+    <% appointments.forEach( el => { %>
+            <li class='appointment' data-id='<%=el._id%>'>
+                <span><%= el._id %></span>
+                <span class='edit'> Edit </span>
+            </li>
+    <% }) %>    
+    </ul>
+
+    <h2><%= user.firstName %> has had <%= totalAppointments %> appointments.</h2>
+
+    <a href="/logout">Logout</a>
+
