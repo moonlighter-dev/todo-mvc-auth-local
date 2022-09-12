@@ -2,11 +2,16 @@ const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
-  userName: { type: String, unique: true },
+  firstName: String,
+  lastName: String,
   email: { type: String, unique: true },
-  password: String
+  password: String,
+  status: {
+    type: String,
+    default: 'patient',
+    enum: ['patient', 'provider']
+  }
 })
-
 
 // Password hash middleware.
  
@@ -23,7 +28,6 @@ const UserSchema = new mongoose.Schema({
   })
 })
 
-
 // Helper method for validating user's password.
 
 UserSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
@@ -31,6 +35,5 @@ UserSchema.methods.comparePassword = function comparePassword(candidatePassword,
     cb(err, isMatch)
   })
 }
-
 
 module.exports = mongoose.model('User', UserSchema)
