@@ -11,7 +11,10 @@ module.exports = {
             console.log(err)
         }
     },
-    newAppointment: async (req, res)=>{
+    createAppointment: (req, res) => {
+        res.render('/appointment/create', {user: req.user})
+    },
+    newAppointment: async (req, res) => {
         try{
             await Appointment.create({
                 date: req.body.date,
@@ -38,6 +41,15 @@ module.exports = {
         }catch(err){
             console.log(err)
         }
+    },
+    showAppointment: async (req, res) => {
+        try {
+            let appointment = await Appointment.find({_id: req.body.id})
+            res.render(`/patient/${req.user.id}/${appointment.id}/edit`, {user: req.user, appointment: appointment})
+        } catch(err) {
+            console.log(err)
+        }
+        
     },
     editAppointment: async (req, res)=>{
         try{

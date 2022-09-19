@@ -1,3 +1,15 @@
+// selecting radio button
+const providerBtn = document.querySelector("provider");
+
+// adding event to all radio buttons
+providerBtn.forEach(button => {
+  button.onclick = () => {
+    if (button.checked) {
+      alert(button.value + " selected as contact option!");
+    }
+  }
+})
+
 const deleteBtn = document.querySelectorAll('.del')
 const todoItem = document.querySelectorAll('span.not')
 const todoComplete = document.querySelectorAll('span.completed')

@@ -1,4 +1,5 @@
 const Appointment = require('../models/Appointment')
+const User = require('../models/User')
 
 module.exports = {
     getDashboard: async (req,res)=>{
@@ -8,6 +9,20 @@ module.exports = {
             const totalPatients = await Patient.countDocuments({ })
             const appointments = await Appointment.find({providerid: req.user.id})
             res.render('patients.ejs', {patients: patients, totalPatients: totalPatients, appointments: appointments, user: req.user})
+        }catch(err){
+            console.log(err)
+        }
+    },
+    newPatient: async (req, res)=>{
+        try{
+            await User.create({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                status: 'patient',
+            })
+            console.log('Patient has been added!')
+            res.redirect('/provider')
         }catch(err){
             console.log(err)
         }

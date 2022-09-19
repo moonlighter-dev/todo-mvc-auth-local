@@ -14,9 +14,14 @@
     <title>Wu Wei</title>
 </head>
 <body>
-    
-    <% body %>
-    
+    <%- include('partials/_header.ejs') %>
+    <div class="container">
+        <%- include('partials/_errorMessages.ejs') %>
+        <%- body %>    
+    </div>
+    <br>
+    <%- include('partials/_footer.ejs') %>
+
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
 

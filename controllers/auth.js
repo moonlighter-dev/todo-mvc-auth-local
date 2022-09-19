@@ -4,7 +4,10 @@ const User = require('../models/User')
 
  exports.getLogin = (req, res) => {
     if (req.user) {
-      return res.redirect('/todos')
+      if (req.user.status === 'provider') {
+        return res.redirect ('/provider')
+      }
+      return res.redirect('/patient')
     }
     res.render('login', {
       title: 'Login'
@@ -31,7 +34,7 @@ const User = require('../models/User')
       req.logIn(user, (err) => {
         if (err) { return next(err) }
         req.flash('success', { msg: 'Success! You are logged in.' })
-        res.redirect(req.session.returnTo || '/todos')
+        res.redirect(req.session.returnTo || user.status === 'provider' ? '/provider' : '/patient')
       })
     })(req, res, next)
   }
@@ -49,7 +52,10 @@ const User = require('../models/User')
   
   exports.getSignup = (req, res) => {
     if (req.user) {
-      return res.redirect('/todos')
+      if (req.user.status === 'provider') {
+        return res.redirect ('/provider')
+      }
+      return res.redirect('/patient')
     }
     res.render('signup', {
       title: 'Create Account'
@@ -69,15 +75,14 @@ const User = require('../models/User')
     req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
   
     const user = new User({
-      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      status: req.body.status,
       email: req.body.email,
       password: req.body.password
     })
   
-    User.findOne({$or: [
-      {email: req.body.email},
-      {userName: req.body.userName}
-    ]}, (err, existingUser) => {
+    User.findOne({email: req.body.email}, (err, existingUser) => {
       if (err) { return next(err) }
       if (existingUser) {
         req.flash('errors', { msg: 'Account with that email address or username already exists.' })
@@ -89,7 +94,10 @@ const User = require('../models/User')
           if (err) {
             return next(err)
           }
-          res.redirect('/todos')
+          if (user.status === "provider") {
+            res.redirect('/provider')
+          }
+          res.redirect('/patient')
         })
       })
     })
