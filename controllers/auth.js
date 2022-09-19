@@ -5,9 +5,9 @@ const User = require('../models/User')
  exports.getLogin = (req, res) => {
     if (req.user) {
       if (req.user.status === 'provider') {
-        return res.redirect ('/provider')
+        return res.redirect ('/patients')
       }
-      return res.redirect('/patient')
+      return res.redirect('/appointments')
     }
     res.render('login', {
       title: 'Login'
@@ -34,7 +34,7 @@ const User = require('../models/User')
       req.logIn(user, (err) => {
         if (err) { return next(err) }
         req.flash('success', { msg: 'Success! You are logged in.' })
-        res.redirect(req.session.returnTo || user.status === 'provider' ? '/provider' : '/patient')
+        res.redirect(req.session.returnTo || user.status === 'provider' ? '/patients' : '/appointments')
       })
     })(req, res, next)
   }
@@ -53,9 +53,9 @@ const User = require('../models/User')
   exports.getSignup = (req, res) => {
     if (req.user) {
       if (req.user.status === 'provider') {
-        return res.redirect ('/provider')
+        return res.redirect ('/patients')
       }
-      return res.redirect('/patient')
+      return res.redirect('/appointments')
     }
     res.render('signup', {
       title: 'Create Account'
@@ -95,9 +95,9 @@ const User = require('../models/User')
             return next(err)
           }
           if (user.status === "provider") {
-            res.redirect('/provider')
+            res.redirect('/patients')
           }
-          res.redirect('/patient')
+          res.redirect('/appointments')
         })
       })
     })

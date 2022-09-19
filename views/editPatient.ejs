@@ -1,0 +1,7 @@
+<div class="container">
+<form action="/patient/<%= patient._id %>/edit" method="PUT">
+    <input type="text" name="firstName" placeholder="<%= patient.firstName %>">
+    <input type="text" name="lastName" placeholder="<%= patient.lastName %>">
+    <input type="email" name="email" placeholder="<%= patient.email %>">
+    <input type="submit">
+</div>

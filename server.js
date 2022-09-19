@@ -9,8 +9,8 @@ const flash = require('express-flash')
 const logger = require('morgan')
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
-const patientRoutes = require('./routes/patient')
-const providerRoutes = require('./routes/provider')
+const appointmentRoutes = require('./routes/appointments')
+const patientRoutes = require('./routes/patients')
 const todoRoutes = require('./routes/todos')
 
 require('dotenv').config({path: './config/.env'})
@@ -45,8 +45,8 @@ app.use(flash())
   
 app.use('/', mainRoutes)
 app.use('/todos', todoRoutes)
-app.use('/patient', patientRoutes)
-app.use('/provider', providerRoutes)
+app.use('/patients', patientRoutes)
+app.use('/appointments', appointmentRoutes)
  
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')

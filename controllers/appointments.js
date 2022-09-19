@@ -1,18 +1,28 @@
 const Appointment = require('../models/Appointment')
 
 module.exports = {
-    getDashboard: async (req,res)=>{
+    getAppointments: async (req,res)=>{
         console.log(req.user)
         try{
-            const appointments = await Appointment.find({patientid:req.user.id})
-            const totalAppointments = await Appointment.countDocuments({patientid:req.user.id})
-            res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, user: req.user})
+            if (req.user.status === "provider") {
+                const appointments = await Appointment.find()
+                const totalAppointments = await Appointment.countDocuments()
+                res.json( {
+                    appointments: appointments, 
+                    totalAppointments: totalAppointments,
+                    user: req.user,
+                })
+            } else {
+                const appointments = await Appointment.find({patientid:req.user.id})
+                const totalAppointments = await Appointment.countDocuments({patientid:req.user.id})
+                res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, user: req.user})                 
+            }
         }catch(err){
             console.log(err)
         }
     },
     createAppointment: (req, res) => {
-        res.render('/appointment/create', {user: req.user})
+        res.render('newAppointment.ejs', {user: req.user})
     },
     newAppointment: async (req, res) => {
         try{
@@ -22,21 +32,6 @@ module.exports = {
                 providerid: req.body.providerid,
             })
             console.log('Appointment has been added!')
-            res.redirect('/patient')
-        }catch(err){
-            console.log(err)
-        }
-    },
-    editPatient: async (req, res)=>{
-        try{
-            await User.findOneAndUpdate({
-                _id: req.user.id
-            },{
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email
-            })
-            console.log('Updated!')
             res.redirect('/patient')
         }catch(err){
             console.log(err)

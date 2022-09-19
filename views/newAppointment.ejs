@@ -1,0 +1,7 @@
+<div class="container">
+    <h2>Schedule an Appointment for <%= user.firstName + " " + user.lastName %></h2>
+    <form action="/appointment/new" method="POST">
+        <input type="date" name="date" placeholder="Date">
+        <input type="text" name="provider" placeholder="Provider">
+        <input type="submit">
+    </div>

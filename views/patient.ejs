@@ -1,0 +1,7 @@
+<div class="container">
+    <h2><%= patient.firstName + " " + patient.lastName %></h2>
+    <h5><%= patient.status %></h5>
+    <span><%= patient.email %></span>
+</div>
+<a class="btn" href="/patients/<%= patient._id %>/edit">Edit</a>
+<a class="btn" href="/patients/<%= patient._id %>/delete">Delete</a>
