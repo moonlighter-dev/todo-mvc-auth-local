@@ -1,12 +1,26 @@
 
     <h1>Patients</h1>
-    <ul>
-    <% patients.forEach( el => { %>
-            <li class='patient' data-id='<%=el._id%>'>
-                <span class><%= el.lastName + ", " + el.firstName%></span>
-            </li>
-    <% }) %>    
-    </ul>
+    <table class="highlight centered">
+        <thead>
+          <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Contact</th>
+              <th>Appointments</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% patients.forEach( el => { %>
+                <tr>
+                    <td><a href="/patients/<%= el._id %>"><%= el.lastName %></a></td>
+                    <td><a href="/patients/<%= el._id %>"><%= el.firstName %></a></td>
+                    <td><a class="btn" href="mailto:<%= el.email %>">Contact</a></td>
+                    <td><a class="btn" href="/appointments/create/<%= el._id %>">New</a></td>
+                </tr>
+            <% }) %> 
+        </tbody>
+      </table>
+
 
     <h2><%= user.firstName %> has <%= totalPatients %> patients.</h2>
 

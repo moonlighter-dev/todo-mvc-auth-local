@@ -5,7 +5,7 @@ const { ensureAuth } = require('../middleware/auth')
 
 router.get('/', ensureAuth, appointmentController.getAppointments)
 
-router.get('/create', appointmentController.createAppointment)
+router.get('/create/:id', appointmentController.createAppointment)
 
 router.post('/new', appointmentController.newAppointment)
 

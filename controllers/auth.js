@@ -96,8 +96,9 @@ const User = require('../models/User')
           }
           if (user.status === "provider") {
             res.redirect('/patients')
+          } else {
+            res.redirect('/appointments')
           }
-          res.redirect('/appointments')
         })
       })
     })

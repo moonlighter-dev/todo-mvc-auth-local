@@ -33,8 +33,9 @@ module.exports = {
     },
     showPatient: async (req, res) => {
         try {
-            let patient = await User.find({_id: req.params.id})
-            res.render('/patient', {user: req.user, patient: patient})
+            const currentPatient = await User.find({_id: req.params.id})
+            console.log(currentPatient)
+            res.render('patient.ejs', {user: req.user, currentPatient: currentPatient})
         } catch(err) {
             console.log(err)
         }

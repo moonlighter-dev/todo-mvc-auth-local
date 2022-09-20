@@ -1,7 +1,8 @@
 <div class="container">
-    <h2><%= patient.firstName + " " + patient.lastName %></h2>
-    <h5><%= patient.status %></h5>
-    <span><%= patient.email %></span>
+    <h2><%= user.firstName + " " + user.lastName %></h2>
+    <h2><%= currentPatient.firstName + " " + currentPatient.lastName %></h2>
+    <h5><%= currentPatient.status %></h5>
+    <span><%= currentPatient.email %></span>
 </div>
-<a class="btn" href="/patients/<%= patient._id %>/edit">Edit</a>
-<a class="btn" href="/patients/<%= patient._id %>/delete">Delete</a>
+<a class="btn" href="/patients/<%= currentPatient._id %>/edit">Edit</a>
+<a class="btn" href="/patients/<%= currentPatient._id %>/delete">Delete</a>
