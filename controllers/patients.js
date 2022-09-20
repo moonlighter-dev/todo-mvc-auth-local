@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Appointment = require('../models/Appointment')
 
 module.exports = {
     getPatients: async (req,res)=>{
@@ -33,13 +34,15 @@ module.exports = {
     },
     showPatient: async (req, res) => {
         try {
-            const currentPatient = await User.find({_id: req.params.id})
-            console.log(currentPatient)
-            res.render('patient.ejs', {user: req.user, currentPatient: currentPatient})
+            const currentPatient = await User.findOne({ _id: req.params.id })
+            const providers = await User.find({ status: "provider" })
+            const appointments = await Appointment.find({
+                patient: currentPatient.id
+            })
+            res.render('patient.ejs', {currentPatient, appointments, providers, user: req.user}) 
         } catch(err) {
             console.log(err)
         }
-        
     },
     deletePatient: async (req, res)=>{
         console.log(req.params.id)

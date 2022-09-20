@@ -1,4 +1,5 @@
 const Appointment = require('../models/Appointment')
+const User = require('../models/User')
 
 module.exports = {
     getAppointments: async (req,res)=>{
@@ -22,6 +23,8 @@ module.exports = {
         }
     },
     createAppointment: (req, res) => {
+        // const todaysDate = Date.now()
+        // console.log(todaysDate.getDate())
         res.render('newAppointment.ejs', {user: req.user})
     },
     newAppointment: async (req, res) => {
