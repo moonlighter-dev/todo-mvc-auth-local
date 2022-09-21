@@ -1,8 +1,22 @@
 <div class="container">
-    <h2>Schedule an Appointment for <%= user.firstName + " " + user.lastName %></h2>
+    <h2>Schedule an Appointment for <%= patient.firstName + " " + patient.lastName %></h2>
     <form action="/appointment/new" method="POST">
-        <input type="date" name="date" placeholder="Date">
-        <input type="text" name="provider" placeholder="Provider">
-        <input type="submit">
+        <div class="col s12">
+            <input type="hidden" id="patientid" name="patientid" value="<%= patient._id %>">
+            <label>Appointment Date</label>
+            <input type="text" class="datepicker">
+            <label>Appointment Time</label>
+            <input type="text" class="timepicker">
+            <div class="input-field">
+                <select>
+                <option value="" disabled selected>Choose your provider</option>
+                <% providers.forEach(el => { %>
+                    <option value="<%= el._id %>"><%= el.firstName + " " +  el.lastName %></option>
+                <% }) %>
+                </select>
+                <label>Provider</label>
+            </div>
+          </div>
+        <input class="btn" type="submit">
     </form>
 </div>

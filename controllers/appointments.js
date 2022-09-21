@@ -22,18 +22,29 @@ module.exports = {
             console.log(err)
         }
     },
-    createAppointment: (req, res) => {
+    createAppointment: async (req, res) => {
         // const todaysDate = Date.now()
         // console.log(todaysDate.getDate())
-        res.render('newAppointment.ejs', {user: req.user})
+        try {
+            const providers = await User.find({ status: "provider" })
+            const patient = await User.findOne({ _id: req.params.id })
+            res.render('newAppointment.ejs', { user: req.user, patient, providers })
+        } catch(err) {
+            console.log(err)
+        }
+
     },
     newAppointment: async (req, res) => {
         try{
-            await Appointment.create({
-                date: req.body.date,
-                patientid: req.user.id,
-                providerid: req.body.providerid,
-            })
+            if (req.user.status === "provider") {
+                await Appointment.create({
+                    date: req.body.date,
+                    time: req.body.time,
+                    patientid: req.body.patientid,
+                    providerid: req.user.id,
+                })                
+            }
+
             console.log('Appointment has been added!')
             res.redirect('/patient')
         }catch(err){

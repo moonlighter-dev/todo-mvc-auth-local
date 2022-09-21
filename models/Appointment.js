@@ -2,9 +2,12 @@ const mongoose = require('mongoose')
 
 const AppointmentSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
-    default: Date.now
+  },
+  time: {
+    type: String,
+    required: true,
   },
   patientid: {
     type: mongoose.Schema.Types.ObjectId,
