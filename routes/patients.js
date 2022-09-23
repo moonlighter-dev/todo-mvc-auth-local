@@ -9,7 +9,9 @@ router.get('/', ensureAuth, patientController.getPatients)
 
 router.get('/:id', patientController.showPatient)
 
-router.put('/:id/edit', patientController.editPatient)
+router.get('/:id/edit', patientController.editPatient)
+
+router.put('/:id/edit', patientController.updatePatient)
 
 router.delete('/:id/delete', patientController.deletePatient)
 

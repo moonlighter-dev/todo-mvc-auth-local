@@ -18,16 +18,24 @@ module.exports = {
         }
     },
     editPatient: async (req, res)=>{
+        try {
+            let patient = await User.findOne({ _id: req.params.id })
+            res.render('editPatient.ejs', { patient: patient, user: req.user })
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    updatePatient: async (req, res) => {
         try{
-            await User.findOneAndUpdate({
-                _id: req.user.id
+            const patient = await User.findOneAndUpdate({
+                _id: req.params.id
             },{
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email
             })
             console.log('Updated!')
-            res.redirect('/patients/' + req.user.id)
+            res.redirect('/patients/' + patient.id)
         }catch(err){
             console.log(err)
         }
@@ -39,7 +47,8 @@ module.exports = {
             const appointments = await Appointment.find({
                 patientid: currentPatient.id
             })
-            res.render('patient.ejs', {currentPatient, appointments, providers, user: req.user}) 
+            console.log(appointments, providers)
+            res.render('patient.ejs', {currentPatient, appointments, providers: providers, user: req.user}) 
         } catch(err) {
             console.log(err)
         }

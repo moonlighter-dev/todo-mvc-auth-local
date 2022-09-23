@@ -6,7 +6,7 @@ module.exports = {
         try{
             if (req.user.status === "provider") {
                 const appointments = await Appointment.find({ providerid: req.user.id })
-                const totalAppointments = await Appointment.countDocuments()
+                const totalAppointments = await Appointment.countDocuments({ providerid: req.user.id })
                 const patients = await User.find({ status: "patient" })
                 res.render('appointments.ejs', {
                     patients: patients,

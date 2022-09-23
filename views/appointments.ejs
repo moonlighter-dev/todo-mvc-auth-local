@@ -1,6 +1,5 @@
 
     <h1>Appointments</h1>
-    <a class="btn" href="/appointments/create/<%= user._id %>">Schedule an Appointment</a>
     <table class="highlight centered">
         <thead>
           <tr>
@@ -8,8 +7,9 @@
               <th>Time</th>
               <% if (user.status === "provider") {%>
                 <th>Patient</th>
-                <% } %>
-              <th>Provider</th>
+              <% } else { %>
+                <th>Provider</th>
+               <% } %> 
               <th>View</th>
           </tr>
         </thead>

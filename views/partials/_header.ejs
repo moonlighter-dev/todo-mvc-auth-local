@@ -10,4 +10,28 @@
             </div>
         </div>
     </div>
+<!-- Only show nav if logged in -->
+    <% if (user) { %>
+        <nav>
+            <div class="nav-wrapper">
+                <ul class="left">
+                    <!-- Schedule an appointment -->
+                    <li><a class="hide-on-med-and-down" href="/appointments/create/<%= user._id %>">Schedule an Appointment</a></li>
+                    <li><a href="/appointments/create/<%= user._id %>"><i class="material-icons">schedule</i></a></li>
+                    <!-- View Appointments -->
+                    <li><a class="hide-on-med-and-down" href="/appointments/">View Appointments</a></li>
+                    <li><a href="/appointments/"><i class="material-icons">event_note</i></a></li>
+                    <!-- If provider, view patients -->
+                    <% if (user.status === "provider") { %>
+                        <li><a class="hide-on-med-and-down" href="/patients/">View Patients</a></li>
+                        <li><a href="/patients/"><i class="material-icons">people</i></a></li>
+                    <% } %>
+                </ul>
+                <!-- Logout -->
+                <ul class="right">
+                    <li><a class="btn" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav> 
+    <% } %>
 </header>
