@@ -1,15 +1,41 @@
 
     <h1>Appointments</h1>
-    <ul>
-    <% appointments.forEach( el => { %>
-            <li class='appointment' data-id='<%=el._id%>'>
-                <span><%= el._id %></span>
-                <span class='edit'> Edit </span>
-            </li>
-    <% }) %>    
-    </ul>
-
-    <a class="btn" href="/appointments/create">Schedule an Appointment</a>
+    <a class="btn" href="/appointments/create/<%= user._id %>">Schedule an Appointment</a>
+    <table class="highlight centered">
+        <thead>
+          <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <% if (user.status === "provider") {%>
+                <th>Patient</th>
+                <% } %>
+              <th>Provider</th>
+              <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% appointments.forEach( el => { %>
+                <tr>
+                    <td><%= el.date %></td>
+                    <td><%= el.time %></td>
+                    <% if (user.status === "provider") { %>
+                        <% patients.forEach(patient => { %>
+                            <% if (patient.id == el.patientid) { %>
+                            <td><a href="/patients/<%= el.patientid%>"><%= patient.firstName + " " + patient.lastName %></a></td>
+                            <% } %>
+                        <% }) %>
+                    <% } else { %>                   
+                        <% providers.forEach(provider => { %>
+                            <% if (provider.id == el.providerid) { %>
+                                <td><%= provider.firstName + " " + provider.lastName %></td>                            
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                    <td><a class="btn" href="/appointments/<%= el._id %>">View</a></td>
+                </tr>
+            <% }) %> 
+        </tbody>
+      </table>
 
     <h2><%= user.firstName %> has had <%= totalAppointments %> appointments.</h2>
 

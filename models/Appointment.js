@@ -11,11 +11,13 @@ const AppointmentSchema = new mongoose.Schema({
   },
   patientid: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true,
   },
   providerid: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true,
   },
   diagnosis: {
     type: String,

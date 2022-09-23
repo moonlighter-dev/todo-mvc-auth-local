@@ -11,7 +11,9 @@ router.post('/new', appointmentController.newAppointment)
 
 router.get('/:id', appointmentController.showAppointment)
 
-router.put('/:id/edit', appointmentController.editAppointment)
+router.get('/:id/edit', appointmentController.editAppointment)
+
+router.put('/:id/edit', appointmentController.updateAppointment)
 
 router.delete('/:id/cancel', appointmentController.cancelAppointment)
 

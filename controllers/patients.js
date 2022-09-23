@@ -37,7 +37,7 @@ module.exports = {
             const currentPatient = await User.findOne({ _id: req.params.id })
             const providers = await User.find({ status: "provider" })
             const appointments = await Appointment.find({
-                patient: currentPatient.id
+                patientid: currentPatient.id
             })
             res.render('patient.ejs', {currentPatient, appointments, providers, user: req.user}) 
         } catch(err) {

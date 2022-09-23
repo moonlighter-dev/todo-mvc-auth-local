@@ -1,22 +1,43 @@
 <div class="container">
-    <h2>Schedule an Appointment for <%= patient.firstName + " " + patient.lastName %></h2>
-    <form action="/appointment/new" method="POST">
+    <h2>Schedule an Appointment for 
+        <% if (user.status === "provider") { %>
+           <%= provider.firstName + " " + provider.lastName %>
+        <% } else { %>
+            <%= patient.firstName + " " + patient.lastName %>
+        <% } %></h2>
+    <form action="/appointments/new" method="POST">
         <div class="col s12">
-            <input type="hidden" id="patientid" name="patientid" value="<%= patient._id %>">
+            <input type="hidden"
+            <% if (user.status === "provider") { %>
+                id="providerid" name="providerid" value="<%= provider._id %>"
+             <% } else { %>
+                id="patientid" name="patientid" value="<%= patient._id %>"                 
+             <% } %>
+            >
             <label>Appointment Date</label>
-            <input type="text" class="datepicker">
+            <input type="text" class="datepicker" name="date">
             <label>Appointment Time</label>
-            <input type="text" class="timepicker">
+            <input type="text" class="timepicker" name="time">
             <div class="input-field">
-                <select>
-                <option value="" disabled selected>Choose your provider</option>
-                <% providers.forEach(el => { %>
-                    <option value="<%= el._id %>"><%= el.firstName + " " +  el.lastName %></option>
-                <% }) %>
-                </select>
-                <label>Provider</label>
+                <% if (user.status === "provider") { %>
+                    <select id="patient" name="patientid">
+                        <option value="" disabled selected>Choose a Patient</option>
+                        <% patients.forEach(el => { %>
+                            <option value="<%= el._id %>"><%= el.firstName + " " +  el.lastName %></option>
+                        <% }) %>
+                    </select>
+                    <label for="patient">Patient</label>
+                <% } else { %>
+                    <select id="provider" name="providerid">
+                        <option value="" disabled selected>Choose your provider</option>
+                        <% providers.forEach(el => { %>
+                            <option value="<%= el._id %>"><%= el.firstName + " " +  el.lastName %></option>
+                        <% }) %>
+                    </select>
+                    <label for="provider">Provider</label>
+                <% } %>
             </div>
-          </div>
-        <input class="btn" type="submit">
+            <input class="btn" type="submit">
+        </div>
     </form>
 </div>

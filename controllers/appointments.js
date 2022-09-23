@@ -3,12 +3,13 @@ const User = require('../models/User')
 
 module.exports = {
     getAppointments: async (req,res)=>{
-        console.log(req.user)
         try{
             if (req.user.status === "provider") {
-                const appointments = await Appointment.find()
+                const appointments = await Appointment.find({ providerid: req.user.id })
                 const totalAppointments = await Appointment.countDocuments()
-                res.json( {
+                const patients = await User.find({ status: "patient" })
+                res.render('appointments.ejs', {
+                    patients: patients,
                     appointments: appointments, 
                     totalAppointments: totalAppointments,
                     user: req.user,
@@ -16,7 +17,9 @@ module.exports = {
             } else {
                 const appointments = await Appointment.find({patientid:req.user.id})
                 const totalAppointments = await Appointment.countDocuments({patientid:req.user.id})
-                res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, user: req.user})                 
+                const providers = await User.find({ status: "provider" })
+                // console.log(appointments, providers)
+                res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, providers: providers, user: req.user})                 
             }
         }catch(err){
             console.log(err)
@@ -26,9 +29,13 @@ module.exports = {
         // const todaysDate = Date.now()
         // console.log(todaysDate.getDate())
         try {
-            const providers = await User.find({ status: "provider" })
-            const patient = await User.findOne({ _id: req.params.id })
-            res.render('newAppointment.ejs', { user: req.user, patient, providers })
+            if (req.user.status === "provider") {
+                const patients = await User.find({ status: "patient" })
+                res.render('newAppointment.ejs', {user: req.user, patients: patients, provider: req.user })
+            } else {
+                const providers = await User.find({ status: "provider" })
+                res.render('newAppointment.ejs', { user: req.user, patient: req.user, providers: providers })                
+            }
         } catch(err) {
             console.log(err)
         }
@@ -36,52 +43,77 @@ module.exports = {
     },
     newAppointment: async (req, res) => {
         try{
+            let appointment
             if (req.user.status === "provider") {
-                await Appointment.create({
+                appointment = await Appointment.create({
                     date: req.body.date,
                     time: req.body.time,
                     patientid: req.body.patientid,
                     providerid: req.user.id,
-                })                
+                })
+                console.log('Appointment has been added!')
+            } else {
+                appointment = await Appointment.create({
+                    date: req.body.date,
+                    time: req.body.time,
+                    patientid: req.user.id,
+                    providerid: req.body.providerid,
+                })
+                console.log('Appointment has been added!')
             }
-
-            console.log('Appointment has been added!')
-            res.redirect('/patient')
+            res.redirect('/appointments/' + appointment._id)
+        
         }catch(err){
             console.log(err)
         }
     },
     showAppointment: async (req, res) => {
         try {
-            let appointment = await Appointment.find({_id: req.body.id})
-            res.render(`/patient/${req.user.id}/${appointment.id}/edit`, {user: req.user, appointment: appointment})
+            let appointment = await Appointment.findOne({ _id: req.params.id })
+            let patient = await User.findOne({ _id: appointment.patientid })
+            let provider = await User.findOne({ _id: appointment.providerid })
+            res.render('appointment.ejs', { patient: patient, provider: provider, user: req.user, appointment: appointment })                
         } catch(err) {
             console.log(err)
         }
         
     },
     editAppointment: async (req, res)=>{
-        try{
-            await Appointment.findOneAndUpdate({
-                _id: req.body.id
-            },{
-                date: req.body.date,
-                providerid: req.body.providerid,
-            })
-            console.log('Your appointment has been updated')
-            res.redirect('/patient')
-        }catch(err){
+        try {
+            let appointment = await Appointment.findOne({ _id: req.params.id })
+            let patient = await User.findOne({ _id: appointment.patientid })
+            let provider = await User.findOne({ _id: appointment.providerid })
+            res.render('editAppointment.ejs', { appointment: appointment, patient: patient, provider: provider, user: req.user })
+        } catch (err) {
             console.log(err)
         }
     },
-    cancelAppointment: async (req, res)=>{
-        console.log(req.body.id)
+    updateAppointment: async (req, res) => {
         try{
-            await Todo.findOneAndDelete({_id:req.body.id})
-            console.log('Deleted Appointment')
-            res.redirect('/patient')
+            let appointment = await Appointment.findOneAndUpdate({
+                _id: req.params.id
+            },{
+                diagnosis: req.body.diagnosis,
+                procedure: req.body.procedure,
+                patientSummary: req.body.patientSummary,
+            })
+            console.log('Your appointment has been updated')
+            // console.log(appointment)
+            res.redirect('/patients/' + appointment.patientid)
         }catch(err){
             console.log(err)
+            res.redirect('/patients/')
+        }
+    },
+    cancelAppointment: async (req, res)=>{
+        // console.log(req.params.id)
+        try{
+            await Appointment.findOneAndDelete({ _id:req.params.id })
+            console.log('Deleted Appointment')
+            res.redirect('/appointments')
+        }catch(err){
+            console.log(err)
+            res.redirect('/appointments')
         }
     }
 }    
