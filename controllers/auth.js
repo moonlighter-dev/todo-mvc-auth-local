@@ -10,7 +10,8 @@ const User = require('../models/User')
       return res.redirect('/appointments')
     }
     res.render('login', {
-      title: 'Login'
+      title: 'Login', 
+      user: req.user,
     })
   }
   

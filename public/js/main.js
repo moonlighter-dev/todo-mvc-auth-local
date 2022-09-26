@@ -80,9 +80,17 @@
 //     }
 // }
 
+// need a function that performs a fetch request on the database to exclude dates and times where there is already an appointment
+
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, { autoClose: true });
+    var instances = M.Datepicker.init(elems, { 
+      autoClose: true, 
+      format: 'ddd, mmm dd, yyyy',
+      disableWeekends: true,
+      minDate: new Date(),
+      // maxDate: '+3M'
+     });
   });
 
   document.addEventListener('DOMContentLoaded', function() {
