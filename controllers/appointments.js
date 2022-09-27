@@ -5,7 +5,10 @@ module.exports = {
     getAppointments: async (req,res)=>{
         try{
             if (req.user.status === "provider") {
-                const appointments = await Appointment.find({ providerid: req.user.id })
+                const appointments = await Appointment
+                    .find({ providerid: req.user.id })
+                    .sort({ date: 1 })
+                    .lean()
                 const totalAppointments = await Appointment.countDocuments({ providerid: req.user.id })
                 const patients = await User.find({ status: "patient" })
                 res.render('appointments.ejs', {
@@ -15,10 +18,13 @@ module.exports = {
                     user: req.user,
                 })
             } else {
-                const appointments = await Appointment.find({patientid:req.user.id})
-                const totalAppointments = await Appointment.countDocuments({patientid:req.user.id})
+                const appointments = await Appointment
+                    .find({ patientid: req.user.id })
+                    .sort({ date: 1 })
+                    .lean()
+                const totalAppointments = appointments.length
                 const providers = await User.find({ status: "provider" })
-                // console.log(appointments, providers)
+                // console.log(appointments)
                 res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, providers: providers, user: req.user})                 
             }
         }catch(err){

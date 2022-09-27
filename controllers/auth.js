@@ -59,7 +59,8 @@ const User = require('../models/User')
       return res.redirect('/appointments')
     }
     res.render('signup', {
-      title: 'Create Account'
+      title: 'Create Account',
+      user: req.user,
     })
   }
   
@@ -82,11 +83,13 @@ const User = require('../models/User')
       email: req.body.email,
       password: req.body.password
     })
+
+    // console.log(user)
   
-    User.findOne({email: req.body.email}, (err, existingUser) => {
+    User.findOne({ email: user.email }, (err, existingUser) => {
       if (err) { return next(err) }
       if (existingUser) {
-        req.flash('errors', { msg: 'Account with that email address or username already exists.' })
+        req.flash('errors', { msg: 'Account with that email address already exists.' })
         return res.redirect('../signup')
       }
       user.save((err) => {

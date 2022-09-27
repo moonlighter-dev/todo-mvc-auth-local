@@ -1,10 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col s4 offset-s8">
-            <form action="/appointments/<%= appointment._id %>/cancel?_method=DELETE" method="POST">
-            <button class="btn" type="submit">Delete Appointment</button>
-          </form>              
-        </div>
+        <h2>Edit Appointment</h2>
     </div>
     <div class="row">
         <form action="/appointments/<%= appointment._id %>/edit?_method=PUT" method="POST">
@@ -33,7 +29,8 @@
                 </div>
             </div>
         </div>
-        <button class="btn" type="submit">Update Appointment</button>
+        <div class="row">
+           <button class="btn right" type="submit">Update Appointment</button>            
+        </div>
     </form>
-
 </div>

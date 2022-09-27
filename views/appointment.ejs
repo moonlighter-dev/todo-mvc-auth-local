@@ -17,17 +17,17 @@
         <% if (user.status === "provider") { %>
             <h5>Diagnosis</h5>
             <p><%= appointment.diagnosis %></p>
-            <h5>Procedures</h5>
-            <p><%= appointment.procedures %></p>
-            <a class="btn" href="../appointments/<%= appointment._id %>/edit">Edit</a>
+            <h5>Procedure</h5>
+            <p><%= appointment.procedure %></p>
+            <div class="row">
+               <a class="btn right" href="../appointments/<%= appointment._id %>/edit">Edit Appointment</a>                
+            </div>
         <% } %>
         </div>
     </div>
     <div class="row">
-        <div class="col s4 offset-s8">
-            <form action="/appointments/<%= appointment._id %>/cancel?_method=DELETE" method="POST">
-            <button class="btn" type="submit">Cancel Appointment</button>
-          </form>              
-        </div>
+        <form action="/appointments/<%= appointment._id %>/cancel?_method=DELETE" method="POST">
+            <button class="btn right" type="submit">Cancel Appointment</button>
+        </form>              
     </div>
 </div>
