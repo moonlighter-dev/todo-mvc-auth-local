@@ -5,7 +5,7 @@ This project is in progress. check back soon for the fully featured version, Oct
 
 **Link to project COMING SOON**
 
-![Wu Wei Demo](https://github.com/moonlighter-dev/wu-wei/public/images/wu-wei-demo.gif)
+![Wu Wei Demo]([https://github.com/moonlighter-dev/wu-wei/public/images/wu-wei-demo.gif](https://github.com/moonlighter-dev/wu-wei/blob/main/public/images/wu-wei-demo.gif))
 
 ## How It's Made:
 
