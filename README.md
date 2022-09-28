@@ -5,7 +5,7 @@ This project is in progress. check back soon for the fully featured version, Oct
 
 **Link to project COMING SOON**
 
-![alt tag](http://placecorgi.com/1200/650)
+![Wu Wei Demo](https://github.com/moonlighter-dev/wu-wei/public/images/wu-wei-demo.gif)
 
 ## How It's Made:
 
