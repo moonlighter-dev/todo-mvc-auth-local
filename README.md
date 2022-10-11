@@ -18,7 +18,7 @@ Practice management software shouldn't be bulky or a hassle. From patient onboar
 Future improvements:
 <ul>
   <li>Updating appointments view to hold two tables: one for future appointments, and one for past appointments</li>
-  <li>Grouping views into folders and updating hypertext references</li>
+  <li>Grouping views into folders and updating hypertext references - done!</li>
   <li>Creating an editable profile for providers that can be viewed by patients, could also add todo-style tags so patients can make notes on their preferred providers</li>
   <li>Connecting a billing api such as stripe that will process payments (I also like Helcim)</li>
   <li>Connecting provider-specific api's such as a <a href="https://github.com/moonlighter-dev/medicinals-api">medicinal herbs api</a> for more streamlined and user-friendly provider records.</li>
