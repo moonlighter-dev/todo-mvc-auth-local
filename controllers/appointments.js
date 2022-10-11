@@ -11,7 +11,7 @@ module.exports = {
                     .lean()
                 const totalAppointments = await Appointment.countDocuments({ providerid: req.user.id })
                 const patients = await User.find({ status: "patient" })
-                res.render('appointments.ejs', {
+                res.render('./appointments/appointments.ejs', {
                     patients: patients,
                     appointments: appointments, 
                     totalAppointments: totalAppointments,
@@ -25,7 +25,7 @@ module.exports = {
                 const totalAppointments = appointments.length
                 const providers = await User.find({ status: "provider" })
                 // console.log(appointments)
-                res.render('appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, providers: providers, user: req.user})                 
+                res.render('./appointments/appointments.ejs', {appointments: appointments, totalAppointments: totalAppointments, providers: providers, user: req.user})                 
             }
         }catch(err){
             console.log(err)
@@ -37,10 +37,10 @@ module.exports = {
         try {
             if (req.user.status === "provider") {
                 const patients = await User.find({ status: "patient" })
-                res.render('newAppointment.ejs', {user: req.user, patients: patients, provider: req.user })
+                res.render('./appointments/newAppointment.ejs', {user: req.user, patients: patients, provider: req.user })
             } else {
                 const providers = await User.find({ status: "provider" })
-                res.render('newAppointment.ejs', { user: req.user, patient: req.user, providers: providers })                
+                res.render('./appointments/newAppointment.ejs', { user: req.user, patient: req.user, providers: providers })                
             }
         } catch(err) {
             console.log(err)
@@ -78,7 +78,7 @@ module.exports = {
             let appointment = await Appointment.findOne({ _id: req.params.id })
             let patient = await User.findOne({ _id: appointment.patientid })
             let provider = await User.findOne({ _id: appointment.providerid })
-            res.render('appointment.ejs', { patient: patient, provider: provider, user: req.user, appointment: appointment })                
+            res.render('./appointments/appointment.ejs', { patient: patient, provider: provider, user: req.user, appointment: appointment })                
         } catch(err) {
             console.log(err)
         }
@@ -89,7 +89,7 @@ module.exports = {
             let appointment = await Appointment.findOne({ _id: req.params.id })
             let patient = await User.findOne({ _id: appointment.patientid })
             let provider = await User.findOne({ _id: appointment.providerid })
-            res.render('editAppointment.ejs', { appointment: appointment, patient: patient, provider: provider, user: req.user })
+            res.render('./appointments/editAppointment.ejs', { appointment: appointment, patient: patient, provider: provider, user: req.user })
         } catch (err) {
             console.log(err)
         }

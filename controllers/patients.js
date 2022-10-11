@@ -8,7 +8,7 @@ module.exports = {
             if (req.user.status === "provider"){
                 const patients = await User.find({ status: "patient" })
                 const totalPatients = patients.length
-                res.render('patients.ejs', { patients: patients, totalPatients: totalPatients, user: req.user })                
+                res.render('./patients/patients.ejs', { patients: patients, totalPatients: totalPatients, user: req.user })                
             } else {
                 console.log('Patients cannot be retrieved by other patients.')
                 res.redirect('/appointments')
@@ -20,7 +20,7 @@ module.exports = {
     editPatient: async (req, res)=>{
         try {
             let patient = await User.findOne({ _id: req.params.id })
-            res.render('editPatient.ejs', { patient: patient, user: req.user })
+            res.render('./patients/editPatient.ejs', { patient: patient, user: req.user })
         } catch (err) {
             console.log(err)
         }
@@ -48,7 +48,7 @@ module.exports = {
                 patientid: currentPatient.id
             })
             console.log(appointments, providers)
-            res.render('patient.ejs', { currentPatient, appointments, providers: providers, user: req.user }) 
+            res.render('./patients/patient.ejs', { currentPatient, appointments, providers: providers, user: req.user }) 
         } catch(err) {
             console.log(err)
         }

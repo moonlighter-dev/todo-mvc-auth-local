@@ -7,3 +7,21 @@
     text-decoration: underline;
 }
 
+.hero{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+}
+
+.hero h5 {
+    padding-bottom: 2rem;
+}
+
+body {
+    background-color: #fafcfb;
+}
+
+.primary {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
