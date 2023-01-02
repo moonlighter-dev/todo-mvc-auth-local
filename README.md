@@ -3,7 +3,7 @@ a practice management app for CAM providers, especially acupuncturists
 
 This project is in progress. check back soon for the fully featured version, Oct 11!
 
-**Link to project COMING SOON**
+**Link to project <a href="https://wu-wei.onrender.com/">https://wu-wei.onrender.com/</a>**
 
 ![Wu Wei Demo](https://github.com/moonlighter-dev/wu-wei/blob/main/public/images/wu-wei-demo.gif)
 
