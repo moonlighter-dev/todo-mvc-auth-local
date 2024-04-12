@@ -4,12 +4,14 @@ const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
+  IDScan: Number,
   email: { type: String, unique: true },
+  phone: Number,
   password: String,
   status: {
     type: String,
-    default: 'patient',
-    enum: ['patient', 'provider']
+    default: 'student',
+    enum: ['student', 'staff', 'admin']
   }
 })
 

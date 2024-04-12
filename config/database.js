@@ -1,19 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const MongoStore = require("connect-mongo");
+let sessionStore
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_STRING, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    })
-
-    console.log(`MongoDB Connected: ${conn.connection.host}`)
+    await mongoose.connect(process.env.DB_STRING)
+    sessionStore = await MongoStore.create({
+      client : mongoose.connection.getClient(),
+      mongoUrl: process.env.DB_STRING,
+    });
+    
+    console.log(`MongoDB Connected!`);
   } catch (err) {
-    console.error(err)
-    process.exit(1)
+    console.error(err);
+    process.exit(1);
   }
-}
+};
 
-module.exports = connectDB
+module.exports = { connectDB, sessionStore };

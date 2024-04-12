@@ -1,13 +1,13 @@
 {
-  "name": "todo-mvc-auth-local",
+  "name": "wu wei",
   "version": "1.0.0",
-  "description": "",
+  "description": "working without effort",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Dana Arroway",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,8 +19,8 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.1",
     "method-override": "^3.0.0",
-    "mongodb": "^3.6.5",
-    "mongoose": "^5.12.3",
+    "mongodb": "^3.7.4",
+    "mongoose": "^8.3.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
     "passport": "^0.6.0",
