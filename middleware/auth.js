@@ -1,16 +1,9 @@
 module.exports = {
     ensureAuth: function (req, res, next) {
       if (req.isAuthenticated()) {
-        return next()
+        return next(user, token)
       } else {
-        res.redirect('/')
-      }
-    },
-    ensureGuest: function (req, res, next) {
-      if (!req.isAuthenticated()) {
-        return next()
-      } else {
-        res.redirect('/')
+        res.error('Code 401: Request not authenticated')
       }
     },
   }

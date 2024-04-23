@@ -10,8 +10,8 @@ const UserSchema = new mongoose.Schema({
   password: String,
   status: {
     type: String,
-    default: 'student',
-    enum: ['student', 'staff', 'admin']
+    default: 'user',
+    enum: ['user', 'admin']
   }
 })
 

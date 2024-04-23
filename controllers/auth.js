@@ -1,16 +1,23 @@
 const passport = require('passport')
+const jwt = require('jsonwebtoken');
 const validator = require('validator')
 const User = require('../models/User')
 
  exports.getLogin = (req, res) => {
     if (req.user) {
-      if (req.user.status === 'staff') {
-        return res.redirect ('/users')
+      if (req.user.status === 'admin') {
+        return res.json({
+          message: 'Admin logged in',
+          user: req.user,
+        })
       }
-      return res.redirect('/reservations')
+      return res.json({
+        message: 'User logged in', 
+        user: req.user,
+    })
     }
-    res.render('login', {
-      title: 'Login', 
+    res.json({
+      message: 'Login initiated!', 
       user: req.user,
     })
   }
@@ -22,7 +29,9 @@ const User = require('../models/User')
   
     if (validationErrors.length) {
       req.flash('errors', validationErrors)
-      return res.redirect('/login')
+      return res.json({
+        message: 'Validation Errors present'
+      })
     }
     req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
   
@@ -30,12 +39,17 @@ const User = require('../models/User')
       if (err) { return next(err) }
       if (!user) {
         req.flash('errors', info)
-        return res.redirect('/login')
+        return next('This user does not exist')
       }
-      req.logIn(user, (err) => {
+      req.login(user, {
+        session: false
+      },
+      async (err) => {
         if (err) { return next(err) }
+        const body = { _id: user._id, email: user.email };
+        const token = jwt.sign({ user: body }, 'TOP_SECRET');
         req.flash('success', { msg: 'Success! You are logged in.' })
-        res.redirect(req.session.returnTo || user.status === 'provider' ? '/patients' : '/appointments')
+        return res.json({ token })
       })
     })(req, res, next)
   }
@@ -44,22 +58,23 @@ const User = require('../models/User')
     req.logout(() => {
       console.log('User has logged out.')
     })
-    req.session.destroy((err) => {
-      if (err) console.log('Error : Failed to destroy the session during logout.', err)
-      req.user = null
-      res.redirect('/')
-    })
   }
   
   exports.getSignup = (req, res) => {
     if (req.user) {
-      if (req.user.status === 'staff') {
-        return res.redirect ('/patients')
+      if (req.user.status === 'admin') {
+        return res.json ({
+          message: 'Administrator detected, welcome She Ra',
+          user: req.user
+        })
       }
-      return res.redirect('/reservations')
+      return res.json({
+        message: 'User signed in',
+        user: req.user
+      })
     }
-    res.render('signup', {
-      title: 'Create Account',
+    res.json({
+      message: 'Create Account',
       user: req.user,
     })
   }
@@ -92,19 +107,18 @@ const User = require('../models/User')
       if (err) { return next(err) }
       if (existingUser) {
         req.flash('errors', { msg: 'Account with that email address already exists.' })
-        return res.redirect('../signup')
+        return res.json({
+          message: 'Could not create account with duplicate email',
+          email: user.email,
+        })
       }
       user.save((err) => {
         if (err) { return next(err) }
-        req.logIn(user, (err) => {
+        req.login(user, (err) => {
           if (err) {
             return next(err)
           }
-          if (user.status === "staff") {
-            res.redirect('/staff')
-          } else {
-            res.redirect('/reservations')
-          }
+          res.json(user)
         })
       })
     })

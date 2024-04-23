@@ -17,9 +17,6 @@ const InventorySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  serial: {
-    type: Number,
-  },
   qty: {
     type: Number,
     required: true,

@@ -20,6 +20,9 @@ const ReservationSchema = new mongoose.Schema({
     ref: 'Inventory',
     required: true,
   },
+  notes: {
+    type: String,
+  },
   inDate: {
     type: String,
   },

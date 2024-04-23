@@ -9,7 +9,7 @@ const connectDB = async () => {
       client : mongoose.connection.getClient(),
       mongoUrl: process.env.DB_STRING,
     });
-    
+  
     console.log(`MongoDB Connected!`);
   } catch (err) {
     console.error(err);

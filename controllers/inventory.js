@@ -1,7 +1,7 @@
-const Todo = require('../models/Todo')
+const Inventory = require('../models/Inventory')
 
 module.exports = {
-    getTodos: async (req,res)=>{
+    getInventory: async (req,res)=>{
         console.log(req.user)
         try{
             const todoItems = await Todo.find({userId:req.user.id})
