@@ -22,20 +22,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))
 
-// Sessions
-app.use(
-    session({
-      secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: false,
-      cookie: { maxAge: oneDay },
-      store: sessionStore,
-    })
-  )
-  
+
 // Passport middleware
 app.use(passport.initialize())
-app.use(passport.session())
 
 app.use(flash())
   
