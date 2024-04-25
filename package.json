@@ -2,9 +2,9 @@
   "name": "wu-wei",
   "version": "1.0.0",
   "description": "working without effort",
-  "main": "server.js",
+  "main": "node server.js",
   "scripts": {
-    "start": "erver.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dana Arroway",
