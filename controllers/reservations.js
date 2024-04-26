@@ -14,23 +14,7 @@ module.exports = {
             console.log(err)
         }
     },
-    // createAppointment: async (req, res) => {
-    //     // const todaysDate = Date.now()
-    //     // console.log(todaysDate.getDate())
-    //     try {
-    //         if (req.user.status === "provider") {
-    //             const patients = await User.find({ status: "patient" })
-    //             res.render('./appointments/newAppointment.ejs', {user: req.user, patients: patients, provider: req.user })
-    //         } else {
-    //             const providers = await User.find({ status: "provider" })
-    //             res.render('./appointments/newAppointment.ejs', { user: req.user, patient: req.user, providers: providers })                
-    //         }
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
-
-    // },
-    newReservation: async (req, res) => {
+    addReservation: async (req, res) => {
         try{
             const todaysDate = new Date()
             let reservation = await Reservation.create({
@@ -55,17 +39,7 @@ module.exports = {
         }
         
     },
-    // editAppointment: async (req, res)=>{
-    //     try {
-    //         let appointment = await Appointment.findOne({ _id: req.params.id })
-    //         let patient = await User.findOne({ _id: appointment.patientid })
-    //         let provider = await User.findOne({ _id: appointment.providerid })
-    //         res.render('./appointments/editAppointment.ejs', { appointment: appointment, patient: patient, provider: provider, user: req.user })
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // },
-    checkin: async (req, res) => {
+    updateReservation: async (req, res) => {
         try{
             let todaysDate = new Date()
             let reservation = await Reservation.findOneAndUpdate({
@@ -73,14 +47,14 @@ module.exports = {
             },{
                 inDate: todaysDate,
             })
-            console.log('Your reservation has been updated')
+            console.log('Your item has been checked in!')
             // console.log(reservation)
             res.json(reservation)
         }catch(err){
             console.log(err)
         }
     },
-    cancelReservation: async (req, res)=>{
+    deleteReservation: async (req, res)=>{
         // console.log(req.params.id)
         try{
             await Reservation.findOneAndDelete({ _id:req.params.id })

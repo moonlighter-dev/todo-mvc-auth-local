@@ -4,7 +4,7 @@ const path = require('path')
 const oneDay = 1000 * 60 * 60 * 24
 const mongoose = require('mongoose')
 const passport = require('passport')
-// const MongoStore = require('connect-mongo')
+const cors = require('cors')
 const flash = require('express-flash')
 const logger = require('morgan')
 const { connectDB } = require('./config/database')
@@ -20,7 +20,7 @@ connectDB()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))
-
+app.use(cors)
 
 // Passport middleware
 app.use(passport.initialize())
