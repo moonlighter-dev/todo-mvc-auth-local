@@ -17,6 +17,29 @@ module.exports = {
             console.log(err)
         }
     },
+    addUser: async (req, res, next) => {
+           
+        const user = new User({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          idScan: req.body.idScan,
+          status: req.body.status,
+          email: req.body.email,
+          phone: req.body.phone,
+          password: req.body.password
+        })
+    
+        // console.log(user)
+          user.save((err) => {
+            if (err) { return next(err) }
+            req.login(user, (err) => {
+              if (err) {
+                return next(err)
+              }
+              res.json(user)
+            })
+          })
+      },
     editUser: async (req, res)=>{
         try {
             let user = await User.findOne({ _id: req.params.id })
@@ -42,7 +65,7 @@ module.exports = {
             console.log(err)
         }
     },
-    showUser: async (req, res) => {
+    getUser: async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.params.id })
             const reservations = await Reservation.find({

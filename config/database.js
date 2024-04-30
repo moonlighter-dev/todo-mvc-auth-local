@@ -11,4 +11,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { connectDB, sessionStore };
+module.exports = { connectDB };

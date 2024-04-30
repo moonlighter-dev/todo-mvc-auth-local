@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     ensureAuth: function (req, res, next) {
+      passport.authenticate('jwt', { session: false })
       const token = req.headers.authorization;
 
       // Check if the token is present

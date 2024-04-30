@@ -4,50 +4,54 @@ module.exports = {
     getInventory: async (req,res)=>{
         console.log(req.user)
         try{
-            const todoItems = await Todo.find({userId:req.user.id})
-            const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user})
+            const allItems = await Inventory.find({})
+            
+            res.json(allItems)
         }catch(err){
             console.log(err)
         }
     },
-    createTodo: async (req, res)=>{
+    getItem: async (req,res)=>{
+        console.log(req.user)
         try{
-            await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
-            console.log('Todo has been added!')
-            res.redirect('/todos')
+            const item = await Inventory.find({ scan: req.scan })
+            
+            res.json(item)
         }catch(err){
             console.log(err)
         }
     },
-    markComplete: async (req, res)=>{
+    addItem: async (req, res)=>{
         try{
-            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-                completed: true
+            const item = await Inventory.create({ 
+                scan: req.body.scan,
+                description: req.body.description,
+                brand: req.body.brand,
+                number: req.body.number,
+                qty: req.body.qty,
             })
-            console.log('Marked Complete')
-            res.json('Marked Complete')
+            console.log('Item has been added!')
+            res.json(item)
         }catch(err){
             console.log(err)
         }
     },
-    markIncomplete: async (req, res)=>{
+    updateItem: async (req, res)=>{
+        const update = req.body
         try{
-            await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-                completed: false
-            })
-            console.log('Marked Incomplete')
-            res.json('Marked Incomplete')
+            const item = await Inventory.findOneAndUpdate({ scan: req.body.itemScan }, update)
+            console.log('Item updated')
+            res.json(item)
         }catch(err){
             console.log(err)
         }
     },
-    deleteTodo: async (req, res)=>{
-        console.log(req.body.todoIdFromJSFile)
+    deleteItem: async (req, res)=>{
+        console.log(req.body.itemScan)
         try{
-            await Todo.findOneAndDelete({_id:req.body.todoIdFromJSFile})
-            console.log('Deleted Todo')
-            res.json('Deleted It')
+            await Inventory.findOneAndDelete({ scan: req.body.itemScan })
+            console.log('Deleted Item')
+            res.json({ msg: 'Deleted Item' })
         }catch(err){
             console.log(err)
         }

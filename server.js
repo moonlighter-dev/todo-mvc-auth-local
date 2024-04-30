@@ -4,10 +4,10 @@ const path = require('path')
 const oneDay = 1000 * 60 * 60 * 24
 const mongoose = require('mongoose')
 const passport = require('passport')
-const MongoStore = require('connect-mongo')
+const cors = require('cors')
 const flash = require('express-flash')
 const logger = require('morgan')
-const { connectDB, sessionStore } = require('./config/database')
+const { connectDB } = require('./config/database')
 const apiRoutes = require('./routes/api')
 
 require('dotenv').config({path: './config/.env'})
@@ -17,11 +17,10 @@ require('./config/passport')(passport)
 
 connectDB()
 
-app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))
-
+app.use(cors)
 
 // Passport middleware
 app.use(passport.initialize())
