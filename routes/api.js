@@ -15,7 +15,7 @@ router.delete('/api/users/delete/:id', ensureAuth, usersController.deleteUser)
 //Inventory Endpoints
 router.get('/api/inventory', inventoryController.getInventory)
 router.get('/api/inventory/:id', inventoryController.getItem)
-router.post('/api/inventory/new', ensureAuth, inventoryController.addItem)
+router.post('/api/inventory/new', inventoryController.addItem)
 router.put('/api/inventory/edit/:id', ensureAuth, inventoryController.updateItem)
 router.delete('/api/inventory/delete/:id', ensureAuth, inventoryController.deleteItem)
 
