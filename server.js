@@ -1,9 +1,5 @@
 const express = require('express')
 const app = express()
-const path = require('path')
-const oneDay = 1000 * 60 * 60 * 24
-const mongoose = require('mongoose')
-const passport = require('passport')
 const cors = require('cors')
 const flash = require('express-flash')
 const logger = require('morgan')
@@ -21,9 +17,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))
 app.use(cors)
-
-// Passport middleware
-app.use(passport.initialize())
 
 app.use(flash())
   
