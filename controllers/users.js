@@ -15,6 +15,8 @@ module.exports = {
         }
     },
     addUser: async (req, res) => {
+        console.log('Adding User now....')
+        console.log(req.body)
         try {
         const user = new User.save({
           firstName: req.body.firstName,
@@ -32,15 +34,8 @@ module.exports = {
         }
         
       },
-    editUser: async (req, res)=>{
-        try {
-            let user = await User.findOne({ _id: req.params.id })
-            res.json(user)
-        } catch (err) {
-            console.log(err)
-        }
-    },
     updateUser: async (req, res) => {
+        console.log(`Updating user ${req.params.id}`)
         try{
             const user = await User.findOneAndUpdate({
                 _id: req.params.id
@@ -58,6 +53,7 @@ module.exports = {
         }
     },
     getUser: async (req, res) => {
+        console.log(`Looking up user ${req.params.id}`)
         try {
             const user = await User.findOne({ _id: req.params.id })
             const reservations = await Reservation.find({
@@ -70,11 +66,13 @@ module.exports = {
         }
     },
     deleteUser: async (req, res)=>{
-        console.log(req.params.id)
+        console.log(`Deleting user ${req.params.id}`)
         try{
             await User.findOneAndDelete({_id:req.params.id})
             console.log('Deleted user')
-            res.redirect('/')
+            res.json({
+                message: "Deleted successfully"
+            })
         }catch(err){
             console.log(err)
         }
