@@ -3,17 +3,14 @@ const Reservation = require('../models/Reservation')
 
 module.exports = {
     getUsers: async (req,res)=>{
-        console.log(req.user)
+        console.log("Welcome to the getUsers Controller!")
         try{
-            if (req.user.status === "admin"){
+            
                 const users = await User.find({ status: "user" })
                 const totalUsers = users.length
                 res.json(users)
-            } else {
-                console.log('Users cannot be retrieved by other users.')
-                res.redirect('/')
             }
-        }catch(err){
+        catch(err){
             console.log(err)
         }
     },

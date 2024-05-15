@@ -8,9 +8,6 @@ const apiRoutes = require('./routes/api')
 
 require('dotenv').config({path: './config/.env'})
 
-// Passport config
-require('./config/passport')(passport)
-
 connectDB()
 
 app.use(express.urlencoded({ extended: true }))
