@@ -14,28 +14,23 @@ module.exports = {
             console.log(err)
         }
     },
-    addUser: async (req, res, next) => {
-           
-        const user = new User({
+    addUser: async (req, res) => {
+        try {
+        const user = new User.save({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           idScan: req.body.idScan,
           status: req.body.status,
           email: req.body.email,
           phone: req.body.phone,
-          password: req.body.password
         })
-    
-        // console.log(user)
-          user.save((err) => {
-            if (err) { return next(err) }
-            req.login(user, (err) => {
-              if (err) {
-                return next(err)
-              }
-              res.json(user)
-            })
-          })
+
+        res.json(user)
+        }
+        catch (err) {
+            console.log(err)
+        }
+        
       },
     editUser: async (req, res)=>{
         try {
